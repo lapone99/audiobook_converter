@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:file_picker_cross/file_picker_cross.dart';
-import 'package:first_flutter_app/pdf_processor/pdf_processor.dart'
+import 'package:audiobook_converter/pdf_processor/pdf_processor.dart'
     as pdf_processor;
 
-import 'package:first_flutter_app/domain/Book.dart';
+import 'package:audiobook_converter/domain/Book.dart';
 
 class Library extends StatefulWidget {
   const Library({Key? key}) : super(key: key);
@@ -59,11 +59,11 @@ class _LibraryState extends State<Library> {
                 })));
   }
 
-  void _selectFile(context) async {
+  void _selectFile(context) {
     FilePickerCross.importFromStorage(
             type: FileTypeCross.custom, fileExtension: 'pdf')
-        .then((filePicker) async {
-      await setFilePicker(filePicker);
+        .then((filePicker) {
+      setFilePicker(filePicker);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('You select file '
@@ -71,18 +71,16 @@ class _LibraryState extends State<Library> {
         ),
       );
 
-      setState(() {});
     });
   }
 
-  Future<void> setFilePicker (FilePickerCross filePicker) async {
+  void setFilePicker (FilePickerCross filePicker) {
     filePickerCross = filePicker;
     filePickerCross!.saveToPath(path: filePickerCross!.fileName!);
     pdf_processor
         .getBookFromFile(filePicker.path!)
-        .then((value) => bookList.add(value));
-    setState(() {
-
+        .then((value) => {
+          setState((){bookList.add(value);})
     });
   }
 }

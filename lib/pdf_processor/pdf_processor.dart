@@ -4,7 +4,7 @@ import 'dart:ui';
 
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf_render/pdf_render.dart';
-import 'package:first_flutter_app/domain/Book.dart';
+import 'package:audiobook_converter/domain/Book.dart';
 import 'package:image/image.dart' as imglib;
 
 Future<Book> getBookFromFile(String filename) async {
@@ -27,5 +27,6 @@ Future<Book> getBookFromFile(String filename) async {
 
 String getNameFromSourceName(String sourceName) {
   return sourceName.substring(
-      sourceName.lastIndexOf('/'), sourceName.lastIndexOf('.'));
+      sourceName.lastIndexOf('/')  + 1, sourceName.lastIndexOf('.')) +
+      "${DateTime.now().minute}" + "${DateTime.now().second}";
 }
